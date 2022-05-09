@@ -71,18 +71,19 @@ function App() {
   const [endImage, setEndImage]= useState(null);
   const [front, setFront] = useState(false);
 
-  const takephoto = () => {
+  const takephotoStart = () => {
     let image = camera.current.takePhoto();
-    console.log(image);
-    startImage(image);
-  }
-
-  const toggleFront = () => {
-    let image = camera.current.takePhoto();
-    console.log(image);
-    startImage(image);
+    setStartImage(image);
     setFront(!front);
   }
+
+  const takephotoEnd = () => {
+    let image = camera.current.takePhoto();
+    setEndImage(image);
+    setFront(!front);
+  }
+
+  
 
 
   return (
@@ -106,7 +107,7 @@ function App() {
             aria-haspopup="true"
             onClick={handleToggle}
           >
-            Start-Job
+            Start Job
           </Button>
           <Popper
             open={open}
@@ -131,8 +132,8 @@ function App() {
                       id="composition-menu"
                       aria-labelledby="composition-button"
                     >
-                      <MenuItem onClick={takephoto}>Take Photo</MenuItem>
-                      <MenuItem onClick={toggleFront}>Cancel Photo</MenuItem>
+                      <MenuItem onClick={takephotoStart}>Take Photo</MenuItem>
+                      <MenuItem onClick={() => setStartImage(null)}>Cancel Photo</MenuItem>
                       <MenuItem>Submit</MenuItem>
                     </MenuList>
                   </ClickAwayListener>
@@ -175,8 +176,8 @@ function App() {
                       id="composition-menu"
                       aria-labelledby="composition-button"
                     >
-                      {/* <MenuItem onClick={()=> setEndImage(camera.current.takePhoto())}>Take Photo</MenuItem>
-                      <MenuItem onClick={() => setEndImage(null)}>Cancel Photo</MenuItem> */}
+                      <MenuItem onClick={takephotoEnd}>Take Photo</MenuItem>
+                      <MenuItem onClick={() => setEndImage(null)}>Cancel Photo</MenuItem>
                       <MenuItem>Submit</MenuItem>
                     </MenuList>
                   </ClickAwayListener>

@@ -8,13 +8,7 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
-import { useCallback, useEffect, useRef, useState } from "react";
-import Webcam from "react-webcam";
-
-// const videoConstraints = {
-//   width: 540,
-//   facingMode: "environment"
-// };
+import { useEffect, useRef, useState } from "react";
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -71,18 +65,10 @@ function App() {
     }
   }, [location]);
 
+  const camera = useRef(null);
+  const [startImage, setStartImage] = useState(null);
+  const [endImage, setEndImage]= useState(null);
 
-  const webcamRef = useRef(null);
-  const [url, setUrl] = useState(null);
-
-  const capturePhoto = useCallback(async () => {
-    const imageSrc = webcamRef.current.getScreenshot();
-    setUrl(imageSrc);
-  }, [webcamRef]);
-
-  const onUserMedia = (e) => {
-    console.log(e);
-  };
 
   return (
     <>
@@ -130,8 +116,8 @@ function App() {
                       id="composition-menu"
                       aria-labelledby="composition-button"
                     >
-                      <MenuItem onClick={capturePhoto}>Take Photo</MenuItem>
-                      <MenuItem onClick={() => setUrl(null)}>Cancel Photo</MenuItem>
+                      <MenuItem onClick={() => setStartImage(camera.current.takePhoto())}>Take Photo</MenuItem>
+                      <MenuItem onClick={() => setStartImage(null)}>Cancel Photo</MenuItem>
                       <MenuItem>Submit</MenuItem>
                     </MenuList>
                   </ClickAwayListener>
@@ -174,8 +160,8 @@ function App() {
                       id="composition-menu"
                       aria-labelledby="composition-button"
                     >
-                      <MenuItem>Take Photo</MenuItem>
-                      <MenuItem>Cancel Photo</MenuItem>
+                      <MenuItem onClick={()=> setEndImage(camera.current.takePhoto())}>Take Photo</MenuItem>
+                      <MenuItem onClick={() => setEndImage(null)}>Cancel Photo</MenuItem>
                       <MenuItem>Submit</MenuItem>
                     </MenuList>
                   </ClickAwayListener>
@@ -188,19 +174,9 @@ function App() {
         <></>
       )}
 
-  <Webcam
-        ref={webcamRef}
-        audio={true}
-        screenshotFormat="image/jpeg"
-        // videoConstraints={videoConstraints}
-        onUserMedia={onUserMedia}
-      />
-      {url && (
-        <div>
-          <img src={url} alt="Screenshot" />
-        </div>
-      )}
-  <Webcam/>
+      <Camera ref={camera} />
+      <img style={{width: '300px', height: '250px', margin: '50px'}} src={startImage} alt='end photo'/>
+      <img style={{width: '300px', height: '250px'}} src={endImage} alt='end photo'/>
 
       <GoogleMap
         centerLat={value.lat}

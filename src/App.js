@@ -9,6 +9,7 @@ import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import { useEffect, useRef, useState } from "react";
+import {Camera} from "react-camera-pro";
 
 function App() {
   const [open, setOpen] = useState(false);

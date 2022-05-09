@@ -91,12 +91,11 @@ function App() {
   );
 
   const startJobSubmit=()=>{
-    // const startCurrentLocation = useGeoLocation();
+    const startCurrentLocation = location;
     const newObj = {};
-    newObj.location= '';
-    newObj.startTime= new Date();
+    newObj.location= startCurrentLocation;
+    newObj.startTime= new Date().toLocaleTimeString();
     setStartJobDetails(newObj);
-    console.log(startJobDetails);
   }
 
   const [endJobDetails, setEndJobDetails]= useState(
@@ -107,12 +106,11 @@ function App() {
   );
 
   const endJobSubmit=()=>{
-    // const endCurrentLocation = useGeoLocation();
+    const endCurrentLocation = location;
     const newObj = {};
-    newObj.location= '';
-    newObj.endTime= new Date();
+    newObj.location= endCurrentLocation;
+    newObj.endTime= new Date().toLocaleTimeString();
     setEndJobDetails(newObj);
-    console.log(endJobDetails);
   }
 
   
@@ -239,7 +237,8 @@ function App() {
      {
        startJobDetails.location ?
        <>
-       <h5>{startJobDetails.startTime}</h5>
+       <h5 style={{marginLeft: '20px'}}>Start Time: {startJobDetails.startTime}</h5>
+     
        <GoogleMap
         location={startJobDetails.location.coordinates ? startJobDetails.location.coordinates : false}
       />
@@ -251,7 +250,7 @@ function App() {
 {
        endJobDetails.location ?
        <>
-       <h5>{endJobDetails.endTime}</h5>
+       <h5 style={{marginLeft: '20px'}}>End Time: {endJobDetails.endTime}</h5>
        <GoogleMap
         location={endJobDetails.location.coordinates ? endJobDetails.location.coordinates : false}
       />

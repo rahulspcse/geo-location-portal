@@ -83,6 +83,38 @@ function App() {
     setFront(!front);
   }
 
+  const [startJobDetails, setStartJobDetails]= useState(
+    {
+      startTime: '',
+      location: '',
+    }
+  );
+
+  const startJobSubmit=()=>{
+    // const startCurrentLocation = useGeoLocation();
+    const newObj = {};
+    newObj.location= '';
+    newObj.startTime= new Date();
+    setStartJobDetails(newObj);
+    console.log(startJobDetails);
+  }
+
+  const [endJobDetails, setEndJobDetails]= useState(
+    {
+      endTime: '',
+      location: '',
+    }
+  );
+
+  const endJobSubmit=()=>{
+    // const endCurrentLocation = useGeoLocation();
+    const newObj = {};
+    newObj.location= '';
+    newObj.endTime= new Date();
+    setEndJobDetails(newObj);
+    console.log(endJobDetails);
+  }
+
   
 
 
@@ -134,7 +166,7 @@ function App() {
                     >
                       <MenuItem onClick={takephotoStart}>Take Photo</MenuItem>
                       <MenuItem onClick={() => setStartImage(null)}>Cancel Photo</MenuItem>
-                      <MenuItem>Submit</MenuItem>
+                      <MenuItem onClick={startJobSubmit}>Submit</MenuItem>
                     </MenuList>
                   </ClickAwayListener>
                 </Paper>
@@ -178,7 +210,7 @@ function App() {
                     >
                       <MenuItem onClick={takephotoEnd}>Take Photo</MenuItem>
                       <MenuItem onClick={() => setEndImage(null)}>Cancel Photo</MenuItem>
-                      <MenuItem>Submit</MenuItem>
+                      <MenuItem onClick={endJobSubmit}>Submit</MenuItem>
                     </MenuList>
                   </ClickAwayListener>
                 </Paper>
@@ -193,24 +225,41 @@ function App() {
       <Camera aspectRatio='cover' ref={camera} facingMode={front ? {exact: 'environment'} : {exact: 'user'} } />
       {
         startImage ?
-        <img style={{width: '300px', height: '250px', margin: '50px'}} src={startImage} />
+        <img style={{width: '300px', height: '350px', margin: '50px'}} src={startImage} />
         :
         <></>
       }
       {
         endImage ?
-        <img style={{width: '300px', height: '250px'}} src={endImage} />
+        <img style={{width: '300px', height: '350px'}} src={endImage} />
         :
         <></>
       }
-     
-    
 
-      <GoogleMap
-        centerLat={value.lat}
-        centerLng={value.lng}
-        location={location.coordinates ? location.coordinates : false}
+     {
+       startJobDetails.location ?
+       <>
+       <h5>{startJobDetails.startTime}</h5>
+       <GoogleMap
+        location={startJobDetails.location.coordinates ? startJobDetails.location.coordinates : false}
       />
+      </>
+      :
+      <></>
+     }
+
+{
+       endJobDetails.location ?
+       <>
+       <h5>{endJobDetails.endTime}</h5>
+       <GoogleMap
+        location={endJobDetails.location.coordinates ? endJobDetails.location.coordinates : false}
+      />
+      </>
+      :
+      <></>
+     }
+      
     </>
   );
 }

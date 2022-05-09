@@ -14,10 +14,6 @@ const distanceToMouse = (pt, mp) => {
   }
 };
 
-const points = [
-  { id: 1, title: "Dewanhat Bus Stop", lat: 22.338655, lng: 91.811704 },
-  { id: 2, title: "Lalkhan Bazar", lat: 22.34745988365366, lng: 91.81925104647928 },
-];
 
 export default function GoogleMap(props) {
   return (
@@ -41,16 +37,10 @@ export default function GoogleMap(props) {
           :
           <></>
         }
-        
-        {/* {points.map(({ lat, lng, id, title }) => {
-          return (
-            <MyMarker key={id} lat={lat} lng={lng} text={id} tooltip={title} />
-          );
-        })} */}
-
+    
         {
           props.location ?
-          <MyMarker key={2} lat={props.location.lat} lng={props.location.lan} text={'my location'} tooltip={'test-address'} />:
+          <MyMarker key={2} lat={props.location.lat} lng={props.location.lan} text={'Current location'} tooltip={'test-address'} />:
           <></>
         }
       </GoogleMapReact>

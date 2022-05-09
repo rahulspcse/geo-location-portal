@@ -11,10 +11,10 @@ import MenuList from "@mui/material/MenuList";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 
-const videoConstraints = {
-  width: 540,
-  facingMode: "environment"
-};
+// const videoConstraints = {
+//   width: 540,
+//   facingMode: "environment"
+// };
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -192,7 +192,7 @@ function App() {
         ref={webcamRef}
         audio={true}
         screenshotFormat="image/jpeg"
-        videoConstraints={videoConstraints}
+        // videoConstraints={videoConstraints}
         onUserMedia={onUserMedia}
       />
       {url && (

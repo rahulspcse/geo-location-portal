@@ -69,6 +69,20 @@ function App() {
   const camera = useRef(null);
   const [startImage, setStartImage] = useState(null);
   const [endImage, setEndImage]= useState(null);
+  const [front, setFront] = useState(false);
+
+  const takephoto = () => {
+    let image = camera.current.takePhoto();
+    console.log(image);
+    startImage(image);
+  }
+
+  const toggleFront = () => {
+    let image = camera.current.takePhoto();
+    console.log(image);
+    startImage(image);
+    setFront(!front);
+  }
 
 
   return (
@@ -117,8 +131,8 @@ function App() {
                       id="composition-menu"
                       aria-labelledby="composition-button"
                     >
-                      <MenuItem onClick={() => setStartImage(camera.current.takePhoto())}>Take Photo</MenuItem>
-                      <MenuItem onClick={() => setStartImage(null)}>Cancel Photo</MenuItem>
+                      <MenuItem onClick={takephoto}>Take Photo</MenuItem>
+                      <MenuItem onClick={toggleFront}>Cancel Photo</MenuItem>
                       <MenuItem>Submit</MenuItem>
                     </MenuList>
                   </ClickAwayListener>
@@ -161,8 +175,8 @@ function App() {
                       id="composition-menu"
                       aria-labelledby="composition-button"
                     >
-                      <MenuItem onClick={()=> setEndImage(camera.current.takePhoto())}>Take Photo</MenuItem>
-                      <MenuItem onClick={() => setEndImage(null)}>Cancel Photo</MenuItem>
+                      {/* <MenuItem onClick={()=> setEndImage(camera.current.takePhoto())}>Take Photo</MenuItem>
+                      <MenuItem onClick={() => setEndImage(null)}>Cancel Photo</MenuItem> */}
                       <MenuItem>Submit</MenuItem>
                     </MenuList>
                   </ClickAwayListener>
@@ -175,7 +189,7 @@ function App() {
         <></>
       )}
 
-      <Camera ref={camera} />
+      <Camera aspectRatio='cover' ref={camera} facingMode={front ? {exact: 'environment'} : {exact: 'user'} } />
       {
         startImage ?
         <img style={{width: '300px', height: '250px', margin: '50px'}} src={startImage} />

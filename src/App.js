@@ -176,8 +176,20 @@ function App() {
       )}
 
       <Camera ref={camera} />
-      <img style={{width: '300px', height: '250px', margin: '50px'}} src={startImage} alt='end photo'/>
-      <img style={{width: '300px', height: '250px'}} src={endImage} alt='end photo'/>
+      {
+        startImage ?
+        <img style={{width: '300px', height: '250px', margin: '50px'}} src={startImage} />
+        :
+        <></>
+      }
+      {
+        endImage ?
+        <img style={{width: '300px', height: '250px'}} src={endImage} />
+        :
+        <></>
+      }
+     
+    
 
       <GoogleMap
         centerLat={value.lat}

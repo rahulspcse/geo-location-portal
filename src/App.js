@@ -10,6 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import { useEffect, useRef, useState } from "react";
 import {Camera} from "react-camera-pro";
+import moment from "moment";
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -94,7 +95,7 @@ function App() {
     const startCurrentLocation = location;
     const newObj = {};
     newObj.location= startCurrentLocation;
-    newObj.startTime= new Date().toLocaleTimeString();
+    newObj.startTime= moment().format('DD-MM-YYYY h:mm:ss a');
     setStartJobDetails(newObj);
   }
 
@@ -105,11 +106,16 @@ function App() {
     }
   );
 
+  const [totalTime, setTotalTime]= useState();
+
   const endJobSubmit=()=>{
     const endCurrentLocation = location;
     const newObj = {};
     newObj.location= endCurrentLocation;
-    newObj.endTime= new Date().toLocaleTimeString();
+    newObj.endTime= moment().format('DD-MM-YYYY h:mm:ss a');
+    const tempObj= moment.duration(moment(newObj.endTime).diff(moment(startJobDetails.startTime)))._data;
+    const temp_total= `${tempObj.hours} hours ${tempObj.minutes} minutes ${tempObj.seconds} seconds`
+    setTotalTime(temp_total);
     setEndJobDetails(newObj);
   }
 
@@ -223,13 +229,20 @@ function App() {
       <Camera aspectRatio='cover' ref={camera} facingMode={front ? {exact: 'environment'} : {exact: 'user'} } />
       {
         startImage ?
-        <img style={{width: '300px', height: '350px', margin: '50px'}} src={startImage} />
+        <Box sx={{my: 3, mx: 5}}>
+        <h5>Start Job Photo</h5>
+        <img style={{width: '300px', height: '350px'}} src={startImage} />
+        </Box>
         :
         <></>
       }
       {
         endImage ?
-        <img style={{width: '300px', height: '350px'}} src={endImage} />
+        <Box>
+           <h5>End Job Photo</h5>
+           <img style={{width: '300px', height: '350px'}} src={endImage} />
+        </Box>
+        
         :
         <></>
       }
@@ -237,11 +250,15 @@ function App() {
      {
        startJobDetails.location ?
        <>
-       <h5 style={{marginLeft: '20px'}}>Start Time: {startJobDetails.startTime}</h5>
+       <Box sx={{m:5}}>
+          <h3>Start Job:</h3>
+          <h5>Lat: {location.coordinates.lat} Lan: {location.coordinates.lan}</h5>
+          <h6>Start Time: {startJobDetails.startTime}</h6>
+       </Box>
      
-       <GoogleMap
+       {/* <GoogleMap
         location={startJobDetails.location.coordinates ? startJobDetails.location.coordinates : false}
-      />
+      /> */}
       </>
       :
       <></>
@@ -249,12 +266,13 @@ function App() {
 
 {
        endJobDetails.location ?
-       <>
-       <h5 style={{marginLeft: '20px'}}>End Time: {endJobDetails.endTime}</h5>
-       <GoogleMap
-        location={endJobDetails.location.coordinates ? endJobDetails.location.coordinates : false}
-      />
-      </>
+       <Box sx={{m: 5}}>
+          <h3>End Job:</h3>
+          <h5>Lat: {location.coordinates.lat} Lan: {location.coordinates.lan}</h5>
+          <h6>End Time: {endJobDetails.endTime}</h6>
+          <h6>Total Time: {totalTime}</h6>
+
+       </Box>
       :
       <></>
      }

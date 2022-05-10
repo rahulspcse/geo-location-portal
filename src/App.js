@@ -227,6 +227,8 @@ function App() {
       )}
 
       <Camera aspectRatio='cover' ref={camera} facingMode={front ? {exact: 'environment'} : {exact: 'user'} } />
+
+      <Box sx={{display: 'flex'}}>
       {
         startImage ?
         <Box sx={{my: 3, mx: 5}}>
@@ -238,7 +240,7 @@ function App() {
       }
       {
         endImage ?
-        <Box>
+        <Box sx={{my: 3, mx: 5}}>
            <h5>End Job Photo</h5>
            <img style={{width: '300px', height: '350px'}} src={endImage} />
         </Box>
@@ -246,6 +248,7 @@ function App() {
         :
         <></>
       }
+      </Box>
 
      {
        startJobDetails.location ?

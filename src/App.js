@@ -29,8 +29,8 @@ function App() {
 
   const location = useGeoLocation();
   const [value, setValue] = useState({
-    lat: 22.3388336,
-    lng: 91.843361,
+    lat: 37.689869,
+    lng: 144.897324,
     distance: 500,
   });
   const [difference, setDifference] = useState("");

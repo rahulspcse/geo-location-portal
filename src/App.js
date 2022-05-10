@@ -228,7 +228,7 @@ function App() {
 
       <Camera aspectRatio='cover' ref={camera} facingMode={front ? {exact: 'environment'} : {exact: 'user'} } />
 
-      <Box sx={{display: 'flex'}}>
+     
       {
         startImage ?
         <Box sx={{my: 3, mx: 5}}>
@@ -248,7 +248,7 @@ function App() {
         :
         <></>
       }
-      </Box>
+    
 
      {
        startJobDetails.location ?
